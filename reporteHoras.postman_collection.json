@@ -1,0 +1,118 @@
+{
+	"info": {
+		"_postman_id": "91964ffa-678c-4123-ba5b-025000bb7d29",
+		"name": "reporteHoras",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "createReporteServicio",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fechainicio\": \"2021-1-2 8:00:00\",\r\n    \"fechafinal\": \"2021-1-2 12:00:00\",\r\n    \"idservicio\": \"001\",\r\n    \"idtecnico\": \"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/reporteservicio",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"reporteservicio"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAll",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/reporteservicio",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"reporteservicio"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getResults",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/results?idtecnico=123456&numerosemana=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"results"
+					],
+					"query": [
+						{
+							"key": "idtecnico",
+							"value": "123456"
+						},
+						{
+							"key": "numerosemana",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getByTecnicoId",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/gethoras?idtecnico=123456&numerosemana=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"gethoras"
+					],
+					"query": [
+						{
+							"key": "idtecnico",
+							"value": "123456"
+						},
+						{
+							"key": "numerosemana",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
