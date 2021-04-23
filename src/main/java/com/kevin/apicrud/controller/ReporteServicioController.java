@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api")
 public class ReporteServicioController {
@@ -32,7 +33,7 @@ public class ReporteServicioController {
         return reporteServicioRepository.findAll();
     }
 
-    @GetMapping("/gethoras")
+    @GetMapping("/getservciostecnico")
     public List<ReporteServicio> findByTecnicoId(@RequestParam String idtecnico, @RequestParam int numerosemana) {
         List<ReporteServicio> results = findAll();
         List<ReporteServicio> finalList = new ArrayList<>();
