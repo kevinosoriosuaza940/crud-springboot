@@ -54,21 +54,30 @@ public class ReporteServicioController {
         int sumhorasdomingo = 0;
         int sumhorastotales = 0;
         int sumhorasnocturnas = 0;
+        int sumhorasextras = 0;
+        int sumhorasextrasdomingo = 0;
+        int sumhorasextrasnocturnas = 0;
 
         for (ReporteServicio rs : results) {
             Date initDate = UtilsHoras.formatDate(rs.getFechainicio());
             Date endDate = UtilsHoras.formatDate(rs.getFechafinal());
             sumhorasnormales += UtilsHoras.calcularhorascomunes(initDate, endDate);
-            sumhorasdomingo += UtilsHoras.calcularhorasdominicales(initDate, endDate);
             sumhorastotales += UtilsHoras.calcularhoraservicio(initDate, endDate);
+            sumhorasdomingo += UtilsHoras.calcularhorasdominicales(initDate, endDate,sumhorastotales);
             sumhorasnocturnas += UtilsHoras.calculadorhorasnocturnas(initDate, endDate);
+            sumhorasextras += UtilsHoras.calcularhorasextras(sumhorastotales);
+            sumhorasextrasdomingo += UtilsHoras.calcularhorasextrasdomingo(initDate,sumhorastotales);
+            sumhorasextrasnocturnas += UtilsHoras.calcularhorasextrasnocturnas(initDate,endDate,sumhorastotales);
 
             finalReport.setIdtecnico(idtecnico);
             finalReport.setNumerosemana(UtilsHoras.calcularsemana(initDate));
-            finalReport.setHorasnormales(sumhorasnormales);
-            finalReport.setHorasdomingo(sumhorasdomingo);
-            finalReport.setHorasnocturas(sumhorasnocturnas);
-            finalReport.setTotalhoras(sumhorastotales);
+            finalReport.setHorasdomingo(sumhorasdomingo-sumhorasextrasdomingo);
+            finalReport.setHorasnocturas(sumhorasnocturnas-sumhorasextrasnocturnas);
+            finalReport.setGetHorasdomingoextra(sumhorasextrasdomingo);
+            finalReport.setHorasnormalesextra(sumhorasextras-sumhorasextrasdomingo-sumhorasextrasnocturnas);
+            finalReport.setTotalhoras(sumhorasnormales);
+            finalReport.setHorasnormales(sumhorastotales-sumhorasextras);
+            finalReport.setHorasnocturnasextra((sumhorasextrasnocturnas));
         }
         finalList.add(finalReport);
         return finalList;
