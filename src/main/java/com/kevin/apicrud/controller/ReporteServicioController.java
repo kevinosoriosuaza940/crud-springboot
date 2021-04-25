@@ -50,35 +50,43 @@ public class ReporteServicioController {
         List<ReporteServicio> results = findByTecnicoId(idtecnico, numerosemana);
         List<ReporteHorasModel> finalList = new ArrayList<>();
         ReporteHorasModel finalReport = new ReporteHorasModel();
-        int sumhorasnormales = 0;
+
         int sumhorasdomingo = 0;
         int sumhorastotales = 0;
         int sumhorasnocturnas = 0;
         int sumhorasextras = 0;
         int sumhorasextrasdomingo = 0;
         int sumhorasextrasnocturnas = 0;
+        int sumhorasnormales = 0;
 
         for (ReporteServicio rs : results) {
             Date initDate = UtilsHoras.formatDate(rs.getFechainicio());
             Date endDate = UtilsHoras.formatDate(rs.getFechafinal());
             sumhorasnormales += UtilsHoras.calcularhorascomunes(initDate, endDate);
             sumhorastotales += UtilsHoras.calcularhoraservicio(initDate, endDate);
-            sumhorasdomingo += UtilsHoras.calcularhorasdominicales(initDate, endDate,sumhorastotales);
+            sumhorasdomingo += UtilsHoras.calcularhorasdominicales(initDate,endDate,sumhorasdomingo);
             sumhorasnocturnas += UtilsHoras.calculadorhorasnocturnas(initDate, endDate);
-            sumhorasextras += UtilsHoras.calcularhorasextras(sumhorastotales);
-            sumhorasextrasdomingo += UtilsHoras.calcularhorasextrasdomingo(initDate,sumhorastotales);
-            sumhorasextrasnocturnas += UtilsHoras.calcularhorasextrasnocturnas(initDate,endDate,sumhorastotales);
+            sumhorasextras += UtilsHoras.calcularhorasextras(sumhorasnormales);
+            sumhorasextrasdomingo += UtilsHoras.calcularhorasextrasdomingo(initDate, endDate,sumhorasextrasdomingo);
+            sumhorasextrasnocturnas += UtilsHoras.calcularhorasextrasnocturnas(initDate,endDate,sumhorasextrasnocturnas);
 
             finalReport.setIdtecnico(idtecnico);
             finalReport.setNumerosemana(UtilsHoras.calcularsemana(initDate));
-            finalReport.setHorasdomingo(sumhorasdomingo-sumhorasextrasdomingo);
-            finalReport.setHorasnocturas(sumhorasnocturnas-sumhorasextrasnocturnas);
-            finalReport.setGetHorasdomingoextra(sumhorasextrasdomingo);
-            finalReport.setHorasnormalesextra(sumhorasextras-sumhorasextrasdomingo-sumhorasextrasnocturnas);
-            finalReport.setTotalhoras(sumhorasnormales);
-            finalReport.setHorasnormales(sumhorastotales-sumhorasextras);
-            finalReport.setHorasnocturnasextra((sumhorasextrasnocturnas));
         }
+
+        finalReport.setHorasnormalesextra(sumhorasextras);
+        finalReport.setHorasdomingo(sumhorasdomingo);
+        finalReport.setGetHorasdomingoextra(sumhorasextrasdomingo);
+        finalReport.setHorasnocturnasextra(sumhorasextrasnocturnas);
+        finalReport.setHorasnocturas(sumhorasnocturnas-sumhorasextrasnocturnas);
+        finalReport.setTotalhoras(sumhorastotales);
+        finalReport.setHorasnormales(sumhorasnormales-sumhorasextras-sumhorasextrasdomingo-sumhorasextrasnocturnas-sumhorasnocturnas);
+
+
+
+
+
+
         finalList.add(finalReport);
         return finalList;
     }
