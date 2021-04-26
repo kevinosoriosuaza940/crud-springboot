@@ -73,7 +73,6 @@ public class ReporteServicioController {
             finalReport.setIdtecnico(idtecnico);
             finalReport.setNumerosemana(UtilsHoras.calcularsemana(initDate));
         }
-
         finalReport.setHorasnormalesextra(sumhorasextras);
         finalReport.setHorasdomingo(sumhorasdomingo);
         finalReport.setGetHorasdomingoextra(sumhorasextrasdomingo);
@@ -81,11 +80,6 @@ public class ReporteServicioController {
         finalReport.setHorasnocturas(sumhorasnocturnas-sumhorasextrasnocturnas);
         finalReport.setTotalhoras(sumhorastotales);
         finalReport.setHorasnormales(sumhorasnormales-sumhorasextras-sumhorasextrasdomingo-sumhorasextrasnocturnas-sumhorasnocturnas);
-
-
-
-
-
 
         finalList.add(finalReport);
         return finalList;
